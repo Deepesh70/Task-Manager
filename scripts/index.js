@@ -31,7 +31,8 @@ const htmlTaskContent = ({ id, title, description, tags, url }) => `
         class="btn btn-outline-primary float-right"
         data-bs-toggle="modal"
         data-bs-target="#showTask"
-
+        id=${id}
+        onclick='openTask.apply(this, arguments)'
     >Open Task
     </button>
     </div>
@@ -100,4 +101,11 @@ const handleSubmit = (event) => {
     })
     updateLocalStorage();
 
+}
+
+const openTask = (e) => {
+    if(!e) e = window.event;
+
+    const getTask = state.taskList.find(({id}) => id === e.target.id);
+    taskModal.innerHTML = htmlModalContent(getTask);
 }
