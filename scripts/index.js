@@ -54,3 +54,44 @@ const htmlModalContent = ({id, title, description, url, tags}) => {
     </div>
     `;
 }
+
+
+const updateLocalStorage = () => {
+    localStorage.setItem(
+        "task", JSON.stringify({ tasks: state.taskList,})
+    );
+};
+
+const loadInitialData= () => {
+    const localStorageCopy = JSON.parse(localStorage.tasks);
+
+    if(localStorageCopy) state.taskList = localStorageCopy.tasks;
+
+    state.taskList.map((cardDate) => {
+        taskContents.insertAdjacentHTML("beforeend", htmlTaskContent(cardDate));
+    });
+};
+
+const hadleSubmit = (event) => {
+    const id = `${Date.now()}`;
+    const input = {
+        url: document.getElementById("imageUrl").value,
+        title: document.getElementById("title").value,
+        description: document.getElementById("description").value,
+        tags: document.getElementById("tags").value,
+    };
+
+    taskContents.insertAdjacentHTML(
+        "beforeend",
+        htmlTaskContent({
+            ...input,
+            id,
+        })
+    )
+    state.taskList.push({
+        ...input,
+        id,
+    })
+    updateLocalStorage();
+    
+}
