@@ -1,10 +1,22 @@
+/*
+ * State Management
+ * Initial state object to hold the list of tasks.
+ */
 const state = {
     taskList: [],
 };
 
+/*
+ * DOM Selections
+ * Selecting necessary DOM elements for manipulation.
+ */
 const taskContents = document.querySelector(".task_contents");
 const taskModal = document.querySelector(".task_modal_body");
 
+/*
+ * HTML Templates
+ * Functions to generate HTML content for tasks and modals.
+ */
 const htmlTaskContent = ({ id, title, description, tags, url }) => `
     <div class="col-md-6 col-lg-4 mt-3" id=${id} key=${id} >
     <div class="card shadow-sm task_card" >
@@ -25,7 +37,8 @@ const htmlTaskContent = ({ id, title, description, tags, url }) => `
     <p class="task_card_tags">${tags}</p>
     </div> 
 
-    <div class="card-footer">
+    
+    <div class="card-footer">  
     <button
         type="button"
         class="btn btn-outline-primary float-right"
@@ -57,6 +70,10 @@ const htmlModalContent = ({ id, title, description, url, tags }) => {
 }
 
 
+/* 
+ * Local Storage Management
+ * Functions to save and load tasks from local storage.
+ */
 const updateLocalStorage = () => {
     localStorage.setItem(
         "tasks", JSON.stringify({ tasks: state.taskList, })
@@ -73,6 +90,10 @@ const loadInitialData = () => {
     });
 };
 
+/* 
+ * Event Handlers
+ * Functions to handle user interactions like submitting forms and opening tasks.
+ */
 const handleSubmit = (event) => {
     event.preventDefault();
     const id = `${Date.now()}`;
@@ -104,8 +125,8 @@ const handleSubmit = (event) => {
 }
 
 const openTask = (e) => {
-    if(!e) e = window.event;
+    if (!e) e = window.event;
 
-    const getTask = state.taskList.find(({id}) => id === e.target.id);
+    const getTask = state.taskList.find(({ id }) => id === e.target.id);
     taskModal.innerHTML = htmlModalContent(getTask);
 }
