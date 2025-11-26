@@ -132,7 +132,7 @@ const editTask = (e) => {
 
     let parentNode;
     let taskTitle;
-    let taskDesciption;
+    let taskDescription;
     let taskType;
     let submitButton;
  
@@ -144,9 +144,20 @@ const editTask = (e) => {
         
     }
 
-    taskTitle = parentNode.childNodes[3].childNodes[3];
-    taskDesciption = parentNode.childNodes[3].childNodes[5];
-    taskType = parentNode.childNodes[3].childNodes[7]; 
+    taskTitle = parentNode.childNodes[3].childNodes[1];
+    taskDescription = parentNode.childNodes[3].childNodes[3];
+    taskType = parentNode.childNodes[3].childNodes[5]; 
     submitButton = parentNode.childNodes[5].childNodes[1];
-    console.log(taskTitle,submitButton);
+    console.log(taskTitle,submitButton,taskDescription,taskType);
+
+    taskTitle.setAttribute("contenteditable", "true");
+    taskDescription.setAttribute("contenteditable", "true");
+    taskType.setAttribute("contenteditable", "true");
+
+
+
+    submitButton.setAttribute("onclick", "saveEditTask.apply(this, arguments)");
+    submitButton.removeAttribute("data-bs-target");
+    submitButton.removeAttribute("data-bs-toggle");
+    submitButton.innerHTML = "Save Changes";
 }
