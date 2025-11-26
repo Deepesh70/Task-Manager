@@ -22,7 +22,7 @@ const htmlTaskContent = ({ id, title, description, tags, url }) => `
     <div class="card shadow-sm task_card" >
     <div class="card-header d-flex gap-2 justify-content-end task_card_header" >
     
-    <button type="button" class="btn btn-outline-info mr-2" name="${id}">
+    <button type="button" class="btn btn-outline-info mr-2" name="${id}" onclick="editTask.apply(this, arguments)">
         <i class="fas fa-pencil-alt" name="${id}"></i>
     </button>
     <button type="button" class="btn btn-outline-danger mr-2" name="${id}" onclick="deleteTask.apply(this, arguments)">
@@ -48,6 +48,7 @@ const htmlTaskContent = ({ id, title, description, tags, url }) => `
     </div>
 `;
 
+// Modal Content Template 
 const htmlModalContent = ({ id, title, description, url, tags }) => {
     const date = new Date(parseInt(id));
     return `
@@ -98,6 +99,7 @@ const handleSubmit = (event) => {
     updateLocalStorage();
 };
 
+// Open Task
 const openTask = (e) => {
     if (!e) e = window.event;
     const getTask = state.taskList.find(({ id }) => id === e.target.id);
@@ -116,3 +118,35 @@ const deleteTask = (e) => {
     const taskElem = document.getElementById(targetID);
     if (taskElem) taskElem.remove();
 };
+
+
+
+
+// Edit Task
+
+const editTask = (e) => {
+    if(!e) e = window.event;
+
+    const targetId = e.target.id;
+    const type = e.target.tagName;
+
+    let parentNode;
+    let taskTitle;
+    let taskDesciption;
+    let taskType;
+    let submitButton;
+ 
+    if(type == "BUTTON"){
+        parentNode = e.target.parentNode.parentNode;
+
+    }else {
+        parentNode = e.target.parentNode.parentNode.parentNode;
+        
+    }
+
+    taskTitle = parentNode.childNodes[3].childNodes[3];
+    taskDesciption = parentNode.childNodes[3].childNodes[5];
+    taskType = parentNode.childNodes[3].childNodes[7]; 
+    submitButton = parentNode.childNodes[5].childNodes[1];
+    console.log(taskTitle,submitButton);
+}
